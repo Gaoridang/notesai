@@ -1,3 +1,5 @@
+"use client";
+
 import { createClient } from "@/utils/supabase/client";
 import { useState } from "react";
 
@@ -8,7 +10,7 @@ const DonePage = () => {
 
   const handleSubmit = async () => {
     // OpenAI API를 통해 임베딩 생성
-    const embeddingResponse = await fetch("/api/generate-embeddings", {
+    const embeddingResponse = await fetch("/api/embeddings", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text: description }),
@@ -19,9 +21,7 @@ const DonePage = () => {
     // Supabase에 데이터 저장
     const { error } = await supabase
       .from("user_activities")
-      .insert([
-        { title, description, date: new Date().toISOString(), embedding },
-      ]);
+      .insert([{ title, description, embedding }]);
 
     if (error) console.error(error);
   };

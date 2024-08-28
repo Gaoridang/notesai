@@ -8,6 +8,20 @@ const CreateActivityPage = () => {
   const supabase = createClient();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [isConverting, setIsConverting] = useState(false);
+  const [convertedText, setConvertedText] = useState("");
+
+  const handleConvert = async () => {
+    setIsConverting(true);
+    const convertedText = await fetch("/api/convert", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: description }),
+    });
+
+    const { text } = await convertedText.json();
+    setConvertedText(text);
+  };
 
   const handleSubmit = async () => {
     // OpenAI API를 통해 임베딩 생성
@@ -42,6 +56,10 @@ const CreateActivityPage = () => {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
+      </div>
+      <div>
+        <button onClick={handleConvert}>변환</button>
+        <div>{convertedText}</div>
       </div>
       <button onClick={handleSubmit}>제출</button>
     </div>

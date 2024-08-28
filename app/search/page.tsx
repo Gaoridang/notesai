@@ -33,7 +33,7 @@ const SearchPage = () => {
       <div>
         <h2>검색 결과</h2>
         <ul>
-          {results.map((result) => (
+          {results?.map((result) => (
             <li key={result.id}>
               {result.title}: {result.description}
             </li>

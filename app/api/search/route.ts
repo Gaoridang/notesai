@@ -11,7 +11,7 @@ export async function POST(request: Request) {
   const { query } = await request.json();
 
   // Generate embeddings
-  const embeddingResponse = await fetch(`${BASE_URL}/api/generate-embeddings`, {
+  const embeddingResponse = await fetch(`${BASE_URL}/api/embeddings`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ text: query }),
